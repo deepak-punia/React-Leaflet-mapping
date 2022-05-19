@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import fetchApi from "./api/covidData";
+import Map from "./components/Map";
+
+const App = () => {
+	const [cordsData, setcordsData] = useState();
+	const [loading, setloading] = useState(true);
+
+	let cords = [];
+	useEffect(() => {
+		async function getData() {
+			//new countris can be added BELOW IN ARRAY
+
+			const countryList = ["india","china","canada","pakistan"];
+			countryList.forEach(async(country)=>{
+				let cordsTemp = await fetchApi(country);
+				cords.push(cordsTemp)
+			});
+			setcordsData(cords);
+			setloading(false);
+		}
+		getData();
+	}, []);
+	//console.log(cordsData);
+
+	return loading ? (
+		<div> Loading Data...</div>
+	) : (
+		<>
+			<Map cordsData={cordsData} />
+		</>
+	);
+};
 
 export default App;
