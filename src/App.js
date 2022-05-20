@@ -2,32 +2,39 @@ import React, { useEffect, useState } from "react";
 
 import fetchApi from "./api/covidData";
 import Map from "./components/Map";
+import "leaflet/dist/leaflet.css";
+import AddCountry from "./components/AddCountry";
 
 const App = () => {
-	const [cordsData, setcordsData] = useState();
+	const [cordsData, setcordsData] = useState([]);
 	const [loading, setloading] = useState(true);
+	const [countryList, setcountryList] = useState([
+		"india",
+		"china",
+		"canada",
+		"pakistan",
+	]);
 
-	let cords = [];
+	const handleChildOnclick = (country) => {
+		setcountryList((countryList) => [...countryList, country]);
+	};
 	useEffect(() => {
 		async function getData() {
-			//new countris can be added BELOW IN ARRAY
-
-			const countryList = ["india","china","canada","pakistan"];
-			countryList.forEach(async(country)=>{
+			countryList.forEach(async (country) => {
 				let cordsTemp = await fetchApi(country);
-				cords.push(cordsTemp)
+				setcordsData((cordsData) => [...cordsData, cordsTemp]);
 			});
-			setcordsData(cords);
+
 			setloading(false);
 		}
 		getData();
-	}, []);
-	//console.log(cordsData);
+	}, [countryList]);
 
 	return loading ? (
 		<div> Loading Data...</div>
 	) : (
 		<>
+			<AddCountry onclick={handleChildOnclick} />
 			<Map cordsData={cordsData} />
 		</>
 	);
