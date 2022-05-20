@@ -3,6 +3,7 @@
 ####This project uses :
     - leaflet maps https://leafletjs.com/
     - Open Disease Data API https://disease.sh/
+    - Bootstrap for layout
 
 - Fetch API data on load using useEffect hook
 - Set data with useState hook
