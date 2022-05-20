@@ -1,6 +1,6 @@
-##React-Leaflet-mapping
+## React-Leaflet-mapping
 
-####This project uses :
+#### This project uses :
     - leaflet maps https://leafletjs.com/
     - Open Disease Data API https://disease.sh/
     - Bootstrap for layout
@@ -11,7 +11,7 @@
 - Pass data to Maps > Makers to create Marker popups with data
 - More countries can be added in App.js > countryList array
 
-####Users Guide
+#### Users Guide
  - User can click on markers on map to view data
   - Country name
   - Total cases
